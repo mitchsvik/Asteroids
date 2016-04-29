@@ -21,7 +21,7 @@ public class MainMenu extends JFrame {
         start.setFont(font);
         start.addActionListener(Action -> {
             Canvas c = new Canvas("Asteroids", f);
-            f.setVisible(false);
+            //f.setVisible(false);
         });
         p.add(start);
 

@@ -2,30 +2,28 @@ package com.coursework.main;
 
 import com.coursework.gameobjects.GameObject;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.LinkedList;
 
 /**
  * Created by Veniamin Zinevych on 28.04.2016.
  */
 public class Canvas extends JPanel{
+    private JFrame canvasFrame;
+    private JFrame parent;
+
     private LinkedList<GameObject> container = new LinkedList<GameObject>();
-    private JFrame parrent;
-    WindowListener w = new WindowAdapter() {
-        @Override
-        public void windowClosed(WindowEvent e) {
-            parrent.setVisible(true);
-        }
-    };
 
     public Canvas(String name, JFrame m) {
-        parrent = m;
+        parent = m;
 
-        JFrame canvasFrame = new JFrame(name);
+        canvasFrame = new JFrame(name);
         canvasFrame.setUndecorated(true);
 
         canvasFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -33,14 +31,19 @@ public class Canvas extends JPanel{
         canvasFrame.setResizable(false);
 
         canvasFrame.add(this);
-        canvasFrame.addWindowListener(w);
 
         canvasFrame.setVisible(true);
     }
 
     @Override
     public void paint(Graphics g){
-
+        BufferedImage image;
+        try {
+            image = ImageIO.read(new File("resources\\images\\backgrounds\\canvasMain.jpg"));
+            g.drawImage(image, 0, 0, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
