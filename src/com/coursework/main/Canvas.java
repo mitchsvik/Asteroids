@@ -22,20 +22,21 @@ public class Canvas extends JPanel{
         }
     };
 
-    public Canvas(String name, int width, int height, JFrame m) {
+    public Canvas(String name, JFrame m) {
         parrent = m;
+
         JFrame canvasFrame = new JFrame(name);
+        canvasFrame.setUndecorated(true);
+
         canvasFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         canvasFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        canvasFrame.setUndecorated(true);
-        canvasFrame.setSize(width, height);
+        canvasFrame.setResizable(false);
+
         canvasFrame.add(this);
-        canvasFrame.setVisible(true);
         canvasFrame.addWindowListener(w);
 
+        canvasFrame.setVisible(true);
     }
-
-
 
     @Override
     public void paint(Graphics g){

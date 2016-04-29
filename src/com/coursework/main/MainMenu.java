@@ -5,7 +5,6 @@ import javax.swing.*;
 
 public class MainMenu extends JFrame {
     MainMenu() {
-        setDefaultLookAndFeelDecorated(true);
         JFrame f = new JFrame("Asteroids");
         f.setSize(360, 480);
         f.setResizable(false);
@@ -21,7 +20,7 @@ public class MainMenu extends JFrame {
         start.setPreferredSize(new Dimension(300, 105));
         start.setFont(font);
         start.addActionListener(Action -> {
-            Canvas c = new Canvas("Asteroids", 1280, 720, f);
+            Canvas c = new Canvas("Asteroids", f);
             f.setVisible(false);
         });
         p.add(start);
