@@ -17,6 +17,7 @@ import java.util.LinkedList;
 public class Canvas extends JPanel{
     private JFrame canvasFrame;
     private JFrame parent;
+    private BufferedImage baskground;
 
     private LinkedList<GameObject> container = new LinkedList<GameObject>();
 
@@ -37,13 +38,13 @@ public class Canvas extends JPanel{
 
     @Override
     public void paint(Graphics g){
-        BufferedImage image;
+        super.paint(g);
         try {
-            image = ImageIO.read(new File("resources\\images\\backgrounds\\canvasMain.jpg"));
-            g.drawImage(image, 0, 0, null);
+            baskground = ImageIO.read(new File("resources\\images\\backgrounds\\canvasMain.jpg"));
         } catch (IOException e) {
-            e.printStackTrace();
+            baskground = new BufferedImage(1, 1, 1);
         }
+        g.drawImage(baskground, 0, 0, null);
     }
 
     @Override
@@ -51,11 +52,11 @@ public class Canvas extends JPanel{
 
     }
 
-    public void addElement(GameObject go) {
-
+    public void add(GameObject go) {
+        container.add(go);
     }
 
-    public void removeElement(GameObject go) {
-            container.remove(go);
+    public void remove(GameObject go) {
+        container.remove(go);
     }
 }
