@@ -4,12 +4,15 @@ import java.awt.*;
 import javax.swing.*;
 
 public class MainMenu extends JFrame {
-    MainMenu() {
-        JFrame f = new JFrame("Asteroids");
-        f.setSize(360, 480);
-        f.setResizable(false);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setLocationRelativeTo(null);
+    private Engine engine;
+
+    MainMenu(Engine e) {
+        engine = e;
+
+        setSize(360, 480);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
@@ -20,8 +23,8 @@ public class MainMenu extends JFrame {
         start.setPreferredSize(new Dimension(300, 105));
         start.setFont(font);
         start.addActionListener(Action -> {
-            Canvas c = new Canvas("Asteroids", f);
-            //f.setVisible(false);
+            e.createCanvas();
+            setVisible(false);
         });
         p.add(start);
 
@@ -29,7 +32,7 @@ public class MainMenu extends JFrame {
         stats.setPreferredSize(new Dimension(300, 105));
         stats.setFont(font);
         stats.addActionListener(Action -> {
-            //Stats frame;
+            e.createStats();
         });
         p.add(stats);
 
@@ -37,7 +40,7 @@ public class MainMenu extends JFrame {
         settings.setPreferredSize(new Dimension(300, 105));
         settings.setFont(font);
         settings.addActionListener(Action -> {
-            //Config frame;
+            e.createSettings();
         });
         p.add(settings);
 
@@ -45,20 +48,12 @@ public class MainMenu extends JFrame {
         exit.setPreferredSize(new Dimension(300, 105));
         exit.setFont(font);
         exit.addActionListener(Action -> {
-            System.exit(0);
+            e.stop();
         });
         p.add(exit);
 
-        f.add(p);
+        add(p);
 
-        f.setVisible(true);
-    }
-
-    public static void main(String args[]) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                MainMenu menu = new MainMenu();
-            }
-        });
+        setVisible(true);
     }
 }
