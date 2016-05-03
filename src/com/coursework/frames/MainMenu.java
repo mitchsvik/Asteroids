@@ -1,4 +1,6 @@
-package com.coursework.main;
+package com.coursework.frames;
+
+import com.coursework.main.Engine;
 
 import java.awt.*;
 import javax.swing.*;
@@ -6,7 +8,7 @@ import javax.swing.*;
 public class MainMenu extends JFrame {
     private Engine engine;
 
-    MainMenu(Engine e) {
+    public MainMenu(Engine e) {
         engine = e;
 
         setSize(360, 480);
@@ -23,8 +25,7 @@ public class MainMenu extends JFrame {
         start.setPreferredSize(new Dimension(300, 105));
         start.setFont(font);
         start.addActionListener(Action -> {
-            e.createCanvas();
-            setVisible(false);
+            e.startGame();
         });
         p.add(start);
 
@@ -32,7 +33,7 @@ public class MainMenu extends JFrame {
         stats.setPreferredSize(new Dimension(300, 105));
         stats.setFont(font);
         stats.addActionListener(Action -> {
-            e.createStats();
+            e.showStats();
         });
         p.add(stats);
 
@@ -40,7 +41,7 @@ public class MainMenu extends JFrame {
         settings.setPreferredSize(new Dimension(300, 105));
         settings.setFont(font);
         settings.addActionListener(Action -> {
-            e.createSettings();
+            e.showSettings();
         });
         p.add(settings);
 

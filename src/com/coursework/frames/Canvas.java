@@ -1,6 +1,7 @@
-package com.coursework.main;
+package com.coursework.frames;
 
 import com.coursework.gameobjects.GameObject;
+import com.coursework.main.GameEngine;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -16,13 +17,13 @@ import java.util.LinkedList;
  */
 public class Canvas extends JPanel{
     private JFrame canvasFrame;
-    private JFrame parent;
+    private GameEngine parent;
     private BufferedImage baskground;
 
     private LinkedList<GameObject> container = new LinkedList<GameObject>();
 
-    public Canvas(String name, JFrame m) {
-        parent = m;
+    public Canvas(String name, GameEngine engine) {
+        parent = engine;
 
         canvasFrame = new JFrame(name);
         canvasFrame.setUndecorated(true);
