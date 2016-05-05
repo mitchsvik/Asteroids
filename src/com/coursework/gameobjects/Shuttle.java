@@ -19,6 +19,37 @@ public class Shuttle implements GameObject {
         energy = 100;
     }
 
+    public int getRadius() {
+        return radius;
+    }
+
+    public int getShieldRadius() {
+        return shieldRadius;
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public boolean isAlive(){
+        if (life > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public BufferedImage getTexture() {
+        return texture;
+    }
+
+    public void setTexture(BufferedImage t) {
+        texture = t;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Shuttle){
