@@ -13,9 +13,10 @@ public class GameEngine {
 
     public GameEngine(Engine e) {
         engine = e;
-        canvas = new Canvas("Asteroids", this);
+        canvas = new Canvas(this);
 
         shuttle = new Shuttle();
+        shuttle.setPos(canvas.getWidth()/2, canvas.getHeight()/2);
         canvas.add(shuttle);
     }
 }

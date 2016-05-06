@@ -22,10 +22,16 @@ public class Canvas extends JPanel{
 
     private LinkedList<GameObject> container = new LinkedList<GameObject>();
 
-    public Canvas(String name, GameEngine engine) {
+    public Canvas(GameEngine engine) {
         parent = engine;
 
-        canvasFrame = new JFrame(name);
+        try {
+            baskground = ImageIO.read(new File("resources\\images\\backgrounds\\canvasMain.jpg"));
+        } catch (IOException e) {
+            baskground = new BufferedImage(1, 1, 1);
+        }
+
+        canvasFrame = new JFrame("Asteroids");
         canvasFrame.setUndecorated(true);
 
         canvasFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -40,11 +46,6 @@ public class Canvas extends JPanel{
     @Override
     public void paint(Graphics g){
         super.paint(g);
-        try {
-            baskground = ImageIO.read(new File("resources\\images\\backgrounds\\canvasMain.jpg"));
-        } catch (IOException e) {
-            baskground = new BufferedImage(1, 1, 1);
-        }
         g.drawImage(baskground, 0, 0, null);
     }
 
