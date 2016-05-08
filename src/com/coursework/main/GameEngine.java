@@ -19,4 +19,8 @@ public class GameEngine {
         shuttle.setPos(canvas.getWidth()/2, canvas.getHeight()/2);
         canvas.add(shuttle);
     }
+
+    public void frameClosing() {
+        engine.showMainMenu();
+    }
 }

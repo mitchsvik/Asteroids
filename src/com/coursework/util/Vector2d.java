@@ -55,6 +55,7 @@ public class Vector2d {
         return Math.sqrt(x * x + y * y);
     }
 
+    public void normalize() {
         double length = getLength();
         if(length != 0.0 && length != 1.0) {
             x /= length;
