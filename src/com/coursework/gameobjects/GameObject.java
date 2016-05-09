@@ -1,6 +1,7 @@
 package com.coursework.gameobjects;
 
 import com.coursework.frames.Canvas;
+import com.coursework.main.GameEngine;
 import com.coursework.util.Vector2d;
 
 import java.awt.*;
@@ -80,6 +81,6 @@ public abstract class GameObject {
         return (position.getDistanceTo(gameObject.position) < radius);
     }
 
-    public abstract void handleCollision(GameObject gameObject, Canvas canvas);
-    public abstract void draw(Graphics2D g, Canvas canvas);
+    public abstract void handleCollision(GameObject gameObject, GameEngine engine);
+    public abstract void draw(Graphics2D g, GameEngine gameEngine);
 }

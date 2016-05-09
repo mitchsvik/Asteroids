@@ -1,6 +1,7 @@
 package com.coursework.gameobjects;
 
 import com.coursework.frames.Canvas;
+import com.coursework.main.GameEngine;
 import com.coursework.util.Vector2d;
 
 import java.awt.*;
@@ -15,12 +16,12 @@ public class Asteroid extends GameObject{
     }
 
     @Override
-    public void handleCollision(GameObject gameObject, Canvas canvas) {
+    public void handleCollision(GameObject gameObject, GameEngine gameEngine) {
 
     }
 
     @Override
-    public void draw(Graphics2D g, Canvas canvas) {
+    public void draw(Graphics2D g, GameEngine gameEngine) {
 
     }
 }
