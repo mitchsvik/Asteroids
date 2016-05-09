@@ -51,6 +51,11 @@ public class Vector2d {
         y *= scalar;
     }
 
+    public void add(Vector2d vector) {
+        x += vector.getX();
+        y += vector.getY();
+    }
+
     public double getLength() {
         return Math.sqrt(x * x + y * y);
     }
@@ -58,6 +63,7 @@ public class Vector2d {
     public void normalize() {
         double length = getLength();
         if(length != 0.0 && length != 1.0) {
+            //scale(1/length);
             x /= length;
             y /= length;
         }

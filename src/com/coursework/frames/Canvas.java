@@ -24,7 +24,7 @@ public class Canvas extends JPanel{
     private GameEngine gameEngine;
     private BufferedImage baskground;
 
-    private LinkedList<GameObject> container = new LinkedList<GameObject>();
+    //private LinkedList<GameObject> container = new LinkedList<GameObject>();
 
     public Canvas(GameEngine engine) {
         gameEngine = engine;
@@ -67,7 +67,7 @@ public class Canvas extends JPanel{
     public void repaint() {
 
     }
-
+/*
     public void add(GameObject go) {
         container.add(go);
     }
@@ -75,4 +75,5 @@ public class Canvas extends JPanel{
     public void remove(GameObject go) {
         container.remove(go);
     }
+*/
 }

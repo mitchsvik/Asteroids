@@ -1,16 +1,26 @@
 package com.coursework.gameobjects;
 
+import com.coursework.frames.Canvas;
+import com.coursework.util.Vector2d;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
  * Created by Veniamin Zinevych on 28.04.2016.
  */
 public class UFO extends GameObject {
+    public UFO(Vector2d position, Vector2d velocity, double radius, int score) {
+        super(position, velocity, radius, score);
+    }
+
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof GameObject){
-            // TODO equals;
-        }
-        return false;
+    public void handleCollision(GameObject gameObject, Canvas canvas) {
+
+    }
+
+    @Override
+    public void draw(Graphics2D g, Canvas canvas) {
+
     }
 }
