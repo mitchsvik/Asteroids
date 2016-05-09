@@ -17,6 +17,12 @@ public class Engine {
 
     public void startGame() {
         menu.setVisible(false);
+        if (settingsMenu != null) {
+            settingsMenu.setVisible(false);
+        }
+        if (statsMenu != null) {
+            statsMenu.setVisible(false);
+        }
         gameEngine = new GameEngine(this);
     }
 
