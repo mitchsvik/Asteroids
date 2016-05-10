@@ -60,19 +60,19 @@ public abstract class GameObject {
         alive = false;
     }
 
-    public void update(Canvas canvas) {
+    public void update(GameEngine gameEngine) {
         position.add(velocity);
         if (position.getX() < 0.0) {
-            position.setX(position.getX() + canvas.getWidth());
+            position.setX(position.getX() + Canvas.FIELD_SIZE);
         }
         if (position.getY() < 0.0) {
-            position.setY(position.getY() + canvas.getHeight());
+            position.setY(position.getY() + Canvas.FIELD_SIZE);
         }
-        if (position.getX() > canvas.getWidth()) {
-            position.setX(position.getX() - canvas.getWidth());
+        if (position.getX() > Canvas.FIELD_SIZE) {
+            position.setX(position.getX() - Canvas.FIELD_SIZE);
         }
-        if (position.getY() > canvas.getHeight()) {
-            position.setY(position.getY() - canvas.getHeight());
+        if (position.getY() > Canvas.FIELD_SIZE) {
+            position.setY(position.getY() - Canvas.FIELD_SIZE);
         }
     }
 

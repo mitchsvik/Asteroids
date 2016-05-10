@@ -46,9 +46,10 @@ public class Vector2d {
         this.y = y;
     }
 
-    public void scale(double scalar) {
+    public Vector2d scale(double scalar) {
         x *= scalar;
         y *= scalar;
+        return this;
     }
 
     public void add(Vector2d vector) {
@@ -60,13 +61,14 @@ public class Vector2d {
         return Math.sqrt(x * x + y * y);
     }
 
-    public void normalize() {
+    public Vector2d normalize() {
         double length = getLength();
         if(length != 0.0 && length != 1.0) {
             //scale(1/length);
             x /= length;
             y /= length;
         }
+        return this;
     }
 
     public double getDistanceTo(Vector2d vector) {

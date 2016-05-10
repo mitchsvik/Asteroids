@@ -17,26 +17,73 @@ import java.io.IOException;
  */
 public class Shuttle extends GameObject {
     private BufferedImage material;
-    private BufferedImage fire;
+    private BufferedImage flame;
+
+    private boolean pushPressed;
+    private boolean rotateLeftPressed;
+    private boolean rotateRightPressed;
 
     public Shuttle() {
-        super(new Vector2d(Canvas.FIELD_SIZE/2, Canvas.FIELD_SIZE/2), new Vector2d(0,0), 10.0, 0);
+        super(new Vector2d(Canvas.FIELD_SIZE/2.0, Canvas.FIELD_SIZE/2.0), new Vector2d(0.0, 0.0), 10.0, 0);
+
         try {
             material = ImageIO.read(new File("resources\\images\\backgrounds\\shuttleMain.png"));
         } catch (IOException e) {
             material = new BufferedImage((int)radius*2, (int)radius*2, 1);
         }
         try {
-            fire = ImageIO.read(new File("resources\\images\\backgrounds\\shuttleFire.png"));
+            flame = ImageIO.read(new File("resources\\images\\backgrounds\\shuttleFlame.png"));
         } catch (IOException e) {
-            fire = new BufferedImage((int)radius*2, (int)radius*2, 1);
+            flame = new BufferedImage((int)radius*2, (int)radius*2, 1);
         }
+
         rotation = -Math.PI / 2;
+        pushPressed = false;
+        rotateLeftPressed = false;
+        rotateRightPressed = false;
+    }
+
+    public void setPush(boolean bool) {
+        pushPressed = bool;
+    }
+
+    public void setRotateLeft(boolean bool) {
+        rotateLeftPressed = bool;
+    }
+
+    public void setRotateRight(boolean bool) {
+        rotateRightPressed = bool;
+    }
+
+    public void reset() {
+        rotation = -Math.PI/2;
+        position.set(Canvas.FIELD_SIZE/2.0, Canvas.FIELD_SIZE/2.0);
+        velocity.set(0.0, 0.0);
+    }
+
+    @Override
+    public void update(GameEngine gameEngine) {
+        super.update(gameEngine);
+
+        if (rotateLeftPressed != rotateRightPressed) {
+            rotate(rotateLeftPressed ? -0.0523 : 0.0523);
+        }
+
+        if (pushPressed) {
+            velocity.add(new Vector2d(rotation).scale(0.036));
+            if (velocity.getLength() > 6.5) {
+                velocity.normalize().scale(6.5);
+            }
+        }
+
+        if (velocity.getLength() > 0.0) {
+            velocity.scale(0.095);
+        }
     }
 
     @Override
     public void handleCollision(GameObject gameObject, GameEngine gameEngine) {
-
+        gameEngine.killShuttle();
     }
 
     @Override
