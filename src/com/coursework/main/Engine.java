@@ -24,6 +24,7 @@ public class Engine {
             statsMenu.setVisible(false);
         }
         gameEngine = new GameEngine(this);
+        gameEngine.startGame();
     }
 
     public void showMainMenu() {

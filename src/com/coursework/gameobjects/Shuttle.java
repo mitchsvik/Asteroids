@@ -77,7 +77,7 @@ public class Shuttle extends GameObject {
         }
 
         if (velocity.getLength() > 0.0) {
-            velocity.scale(0.095);
+            velocity.scale(0.995);
         }
     }
 

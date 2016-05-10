@@ -5,10 +5,7 @@ import com.coursework.gameobjects.GameObject;
 import com.coursework.gameobjects.Shuttle;
 
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,6 +19,7 @@ public class GameEngine extends JFrame {
     private Canvas canvas;
     private Shuttle shuttle;
     private Random random;
+    private Timer timer;
     private int lives;
 
     public GameEngine(Engine e) {
@@ -100,8 +98,6 @@ public class GameEngine extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-
-        startGame();
     }
 
     public List<GameObject> getGameObjectList() {
@@ -120,6 +116,15 @@ public class GameEngine extends JFrame {
         lives = 3;
 
         gameObjectList.add(shuttle);
+
+        timer = new Timer(50, ActionEvent -> {
+                for (int i = 0; i<5; i++) {
+                    updateGame();
+                }
+                canvas.repaint();
+            }
+        );
+        timer.start();
     }
 
     public void updateGame() {
