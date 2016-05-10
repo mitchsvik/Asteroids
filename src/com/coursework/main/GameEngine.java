@@ -5,16 +5,16 @@ import com.coursework.gameobjects.GameObject;
 import com.coursework.gameobjects.Shuttle;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Veniamin Zinevych on 03.05.2016.
  */
 public class GameEngine extends JFrame {
     private List<GameObject> gameObjectList;
+    private List<GameObject> waitingList;
     private Engine engine;
     private Canvas canvas;
     private Shuttle shuttle;
@@ -60,6 +60,7 @@ public class GameEngine extends JFrame {
                         break;
                     // Open fire from main gun;
                     case KeyEvent.VK_SPACE:
+                        shuttle.setFiring(true);
                         break;
                     // Pause the game;
                     case KeyEvent.VK_ESCAPE:
@@ -90,6 +91,7 @@ public class GameEngine extends JFrame {
                         break;
                     // Stop fire from main gun;
                     case KeyEvent.VK_SPACE:
+                        shuttle.setFiring(false);
                         break;
                 }
             }
@@ -109,7 +111,8 @@ public class GameEngine extends JFrame {
     }
 
     public void startGame() {
-        gameObjectList = new ArrayList<GameObject>();
+        gameObjectList = new LinkedList<GameObject>();
+        waitingList = new ArrayList<GameObject>();
         shuttle = new Shuttle();
         random = new Random();
 
@@ -117,28 +120,42 @@ public class GameEngine extends JFrame {
 
         gameObjectList.add(shuttle);
 
-        timer = new Timer(50, ActionEvent -> {
-                for (int i = 0; i<5; i++) {
-                    updateGame();
-                }
-                canvas.repaint();
+        timer = new Timer(17, ActionEvent -> {
+            updateGame();
+            canvas.repaint();
             }
         );
         timer.start();
     }
 
     public void updateGame() {
+        gameObjectList.addAll(waitingList);
+        waitingList.clear();
+
         for (GameObject gameObject: gameObjectList) {
             gameObject.update(this);
+        }
+
+        Iterator<GameObject> iterator = gameObjectList.iterator();
+        while (iterator.hasNext()) {
+            if (!iterator.next().isAlive()) {
+                iterator.remove();
+            }
         }
     }
 
     public void resetGame() {
         lives = 3;
+        waitingList.clear();
+        gameObjectList.clear();
+        gameObjectList.add(shuttle);
     }
 
     public void killShuttle() {
         lives--;
     }
 
+    public void addGameObject(GameObject gameObject) {
+        waitingList.add(gameObject);
+    }
 }

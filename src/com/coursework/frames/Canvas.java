@@ -42,6 +42,7 @@ public class Canvas extends JPanel{
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
 
         AffineTransform transform = g2d.getTransform();
 
@@ -52,6 +53,7 @@ public class Canvas extends JPanel{
             Vector2d position = gameObject.getPosition();
 
             drawGameObject(g2d, gameObject, position.getX(), position.getY());
+            g2d.setTransform(transform);
         }
     }
 

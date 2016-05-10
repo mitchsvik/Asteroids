@@ -11,6 +11,9 @@ import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Veniamin Zinevych on 28.04.2016.
@@ -22,6 +25,12 @@ public class Shuttle extends GameObject {
     private boolean pushPressed;
     private boolean rotateLeftPressed;
     private boolean rotateRightPressed;
+    private boolean firePressed;
+    private boolean firingEnabled;
+    private int consecutiveShots;
+    private int fireCooldown;
+    private int overheatCooldown;
+    private List<Bullet> bullets;
 
     public Shuttle() {
         super(new Vector2d(Canvas.FIELD_SIZE/2.0, Canvas.FIELD_SIZE/2.0), new Vector2d(0.0, 0.0), 10.0, 0);
@@ -37,10 +46,15 @@ public class Shuttle extends GameObject {
             flame = new BufferedImage((int)radius*2, (int)radius*2, 1);
         }
 
+        bullets = new LinkedList<Bullet>();
         rotation = -Math.PI / 2;
         pushPressed = false;
         rotateLeftPressed = false;
         rotateRightPressed = false;
+        firePressed = false;
+        firingEnabled = true;
+        fireCooldown = 0;
+        overheatCooldown = 0;
     }
 
     public void setPush(boolean bool) {
@@ -55,10 +69,20 @@ public class Shuttle extends GameObject {
         rotateRightPressed = bool;
     }
 
+    public void setFiring(boolean bool) {
+        firePressed = bool;
+    }
+
+    public void setFiringEnabled(boolean bool) {
+        firingEnabled = bool;
+    }
+
     public void reset() {
         rotation = -Math.PI/2;
         position.set(Canvas.FIELD_SIZE/2.0, Canvas.FIELD_SIZE/2.0);
         velocity.set(0.0, 0.0);
+        bullets.clear();
+        consecutiveShots = 0;
     }
 
     @Override
@@ -79,6 +103,33 @@ public class Shuttle extends GameObject {
         if (velocity.getLength() > 0.0) {
             velocity.scale(0.995);
         }
+
+        Iterator<Bullet> iterator = bullets.iterator();
+        while (iterator.hasNext()) {
+            Bullet bullet = iterator.next();
+            if (!bullet.isAlive()) {
+                iterator.remove();
+            }
+        }
+
+        fireCooldown--;
+
+        if (firingEnabled && firePressed && fireCooldown < 0) {
+            if (bullets.size() < 8) {
+                fireCooldown = 4;
+                Bullet bullet = new Bullet(this, rotation);
+                bullets.add(bullet);
+                gameEngine.addGameObject(bullet);
+            }
+
+            consecutiveShots++;
+            if(consecutiveShots == 8) {
+                consecutiveShots = 0;
+                overheatCooldown = 30;
+            }
+        } else if (consecutiveShots > 0) {
+            consecutiveShots--;
+        }
     }
 
     @Override
@@ -91,12 +142,6 @@ public class Shuttle extends GameObject {
         Shape shape = getShape();
         Rectangle r = shape.getBounds();
 
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-
-        AffineTransform centerTransform = AffineTransform.getTranslateInstance(-r.x+1, -r.y+1);
-
-        g.transform(centerTransform);
         g.setClip(shape);
         g.drawImage(material, -(int)radius, -(int)radius, null);
         g.setClip(null);
