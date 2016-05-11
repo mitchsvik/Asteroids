@@ -9,7 +9,6 @@ import java.awt.geom.AffineTransform;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Iterator;
 
 /**
  * Created by Veniamin Zinevych on 28.04.2016.
@@ -23,7 +22,7 @@ public class Canvas extends JPanel{
         gameEngine = engine;
 
         setBackground(Color.BLACK);
-        setPreferredSize(new Dimension(FIELD_SIZE, FIELD_SIZE));
+        setPreferredSize(new Dimension(FIELD_SIZE-10, FIELD_SIZE-10));
     }
 
     @Override
@@ -37,14 +36,12 @@ public class Canvas extends JPanel{
 
         AffineTransform transform = g2d.getTransform();
 
-        Iterator<GameObject> iterator = gameEngine.getGameObjectList().iterator();
-        while (iterator.hasNext()) {
-            GameObject gameObject = iterator.next();
-
+        for (GameObject gameObject: gameEngine.getGameObjectList()) {
             Vector2d position = gameObject.getPosition();
 
             drawGameObject(g2d, gameObject, position.getX(), position.getY());
             g2d.setTransform(transform);
+            drawOtherSide(g2d, gameObject, position.getX(), position.getY(), transform);
         }
     }
 
@@ -55,5 +52,36 @@ public class Canvas extends JPanel{
             g2d.rotate(gameObject.getRotation());
         }
         gameObject.draw(g2d, gameEngine);
+    }
+
+    private void drawOtherSide(Graphics2D g2d, GameObject gameObject, double x, double y, AffineTransform transform) {
+        double radius = gameObject.getRadius();
+        double x_pos = x;
+        double y_pos = y;
+
+        if (x < radius) {
+            x_pos += FIELD_SIZE;
+        } else if (x > (FIELD_SIZE - radius)) {
+            x_pos -= FIELD_SIZE;
+        }
+
+        if (y < radius) {
+            y_pos += FIELD_SIZE;
+        } else if (y > (FIELD_SIZE - radius)) {
+            y_pos -= FIELD_SIZE;
+        }
+
+        if (x_pos != x) {
+            drawGameObject(g2d, gameObject, x_pos, y);
+            g2d.setTransform(transform);
+        }
+        if (y_pos != y) {
+            drawGameObject(g2d, gameObject, x, y_pos);
+            g2d.setTransform(transform);
+        }
+        if (y_pos != y && x_pos != x) {
+            drawGameObject(g2d, gameObject, x_pos, y_pos);
+            g2d.setTransform(transform);
+        }
     }
 }

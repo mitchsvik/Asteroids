@@ -12,6 +12,7 @@ import java.io.IOException;
 public class TexturePool {
     private static BufferedImage canvasBackground;
     private static BufferedImage shuttle;
+    private static BufferedImage flame;
     private static BufferedImage asteroidRock;
     private static BufferedImage asteroidIce;
     private static BufferedImage asteroidMagma;
@@ -38,6 +39,13 @@ public class TexturePool {
         return shuttle;
     }
 
+    public static BufferedImage getFlameTexture() {
+        if (flame == null) {
+            flame = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+            flame = drawSimpleMaterialTexture(flame, Color.ORANGE);
+        }
+        return flame;
+    }
 
     public static BufferedImage getAsteroidRockTexture() {
         if (asteroidRock == null) {

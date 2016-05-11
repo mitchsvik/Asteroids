@@ -95,8 +95,8 @@ public class Shuttle extends GameObject {
         }
 
         fireCooldown--;
-
-        if (firingEnabled && firePressed && fireCooldown < 0) {
+        overheatCooldown--;
+        if (firingEnabled && firePressed && fireCooldown <= 0 && overheatCooldown <= 0) {
             if (bullets.size() < 8) {
                 fireCooldown = 4;
                 Bullet bullet = new Bullet(this, rotation);
@@ -116,7 +116,9 @@ public class Shuttle extends GameObject {
 
     @Override
     public void handleCollision(GameObject gameObject, GameEngine gameEngine) {
-        gameEngine.killShuttle();
+        if (gameObject.getClass() != Bullet.class) {
+            gameEngine.killShuttle();
+        }
     }
 
     @Override
@@ -129,6 +131,13 @@ public class Shuttle extends GameObject {
         g.setColor(Color.WHITE);
         g.setStroke(new BasicStroke(1f));
         g.draw(shape);
+
+        if (pushPressed) {
+            shape = getFlameShape();
+
+            g.setClip(shape);
+            g.drawImage(TexturePool.getFlameTexture(), -11, -5, null);
+        }
     }
 
     private Shape getShape() {
@@ -140,6 +149,15 @@ public class Shuttle extends GameObject {
         p.lineTo(-6, 5);
         p.lineTo(-8, 6);
         p.lineTo(-5, 9);
+        p.closePath();
+        return p;
+    }
+
+    private Shape getFlameShape() {
+        GeneralPath p = new GeneralPath();
+        p.moveTo(-6,-5);
+        p.lineTo(-11, 0);
+        p.lineTo(-6, 5);
         p.closePath();
         return p;
     }

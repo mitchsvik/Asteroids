@@ -6,26 +6,29 @@ import com.coursework.util.TexturePool;
 import com.coursework.util.Vector2d;
 
 import java.awt.*;
-import java.awt.geom.GeneralPath;
 import java.util.Random;
 
 /**
  * Created by Veniamin Zinevych on 28.04.2016.
  */
 public class Asteroid extends GameObject{
-    private int size;
+    private AsteroidType type;
     private double rotation;
 
     public Asteroid(Random random) {
-        super(calculatePosition(random), calculateVelocity(random), 40, 25);
+        super(calculatePosition(random), calculateVelocity(random), AsteroidType.Large.getRadius(), AsteroidType.Large.getScore());
         rotation = -0.01 + random.nextDouble()*0.02;
-        size = 3;
+        type = AsteroidType.Large;
     }
 
-    public Asteroid(Asteroid parent, int size, Random random) {
-        super(parent.getPosition(), calculateVelocity(random), 40/(2*(2-size)+5), parent.getScore()*2);
+    public Asteroid(Asteroid parent, AsteroidType type, Random random) {
+        super(parent.getPosition(), calculateVelocity(random), type.getRadius(), type.getScore());
         rotation = -0.01 + random.nextDouble()*0.02;
-        this.size = size;
+        this.type = type;
+
+        for (int i = 0; i < 5; i++) {
+            update(null);
+        }
     }
 
     @Override
@@ -37,10 +40,10 @@ public class Asteroid extends GameObject{
     @Override
     public void handleCollision(GameObject gameObject, GameEngine gameEngine) {
         if (gameObject.getClass() != Asteroid.class) {
-            if (size != 1) {
-                int spawnSize = size - 1;
+            if (type != AsteroidType.Small) {
+                AsteroidType spawnType = AsteroidType.values()[type.ordinal() - 1];
                 for(int i = 0; i<2; i++) {
-                    gameEngine.addGameObject(new Asteroid(this, spawnSize, gameEngine.getRandom()));
+                    gameEngine.addGameObject(new Asteroid(this, spawnType, gameEngine.getRandom()));
                 }
             }
         }
@@ -48,11 +51,11 @@ public class Asteroid extends GameObject{
 
     @Override
     public void draw(Graphics2D g, GameEngine gameEngine) {
-        Shape shape = getShape();
+        Shape shape = type.getShape(radius);
 
         g.setColor(Color.WHITE);
         g.setClip(shape);
-        g.drawImage(TexturePool.getAsteroidMagmaTexture(), -(int)radius, -(int)radius, null);
+        g.drawImage(TexturePool.getAsteroidRockTexture(), -(int)radius, -(int)radius, null);
         g.setClip(null);
     }
 
@@ -63,19 +66,5 @@ public class Asteroid extends GameObject{
 
     private static Vector2d calculateVelocity(Random random) {
         return new Vector2d(random.nextDouble() * Math.PI * 2).scale(0.75 + random.nextDouble());
-    }
-
-    private Shape getShape() {
-        double x, y;
-        double angleDelta = Math.PI*2 / (size*4);
-        GeneralPath p = new GeneralPath();
-        p.moveTo(radius, 0);
-        for(int i = 1; i < size*4; i++) {
-            x = Math.cos(angleDelta*i)*radius;
-            y = Math.sin(angleDelta*i)*radius;
-            p.lineTo(x,y);
-        }
-        p.closePath();
-        return p;
     }
 }
