@@ -4,6 +4,7 @@ import com.coursework.frames.Canvas;
 import com.coursework.gameobjects.Asteroid;
 import com.coursework.gameobjects.GameObject;
 import com.coursework.gameobjects.Shuttle;
+import com.coursework.util.TexturePool;
 
 import javax.swing.*;
 import javax.swing.Timer;
@@ -36,6 +37,7 @@ public class GameEngine extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
+                TexturePool.reset();
                 engine.showMainMenu();
             }
         });

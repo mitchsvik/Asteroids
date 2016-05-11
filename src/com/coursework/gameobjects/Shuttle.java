@@ -2,11 +2,11 @@ package com.coursework.gameobjects;
 
 import com.coursework.frames.Canvas;
 import com.coursework.main.GameEngine;
+import com.coursework.util.TexturePool;
 import com.coursework.util.Vector2d;
 
 import java.awt.*;
 import java.awt.geom.GeneralPath;
-import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -124,6 +124,7 @@ public class Shuttle extends GameObject {
         Shape shape = getShape();
 
         g.setClip(shape);
+        g.drawImage(TexturePool.getShuttleTexture(), -(int)radius, -(int)radius, null);
         g.setClip(null);
         g.setColor(Color.WHITE);
         g.setStroke(new BasicStroke(1f));

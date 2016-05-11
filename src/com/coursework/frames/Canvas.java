@@ -2,10 +2,10 @@ package com.coursework.frames;
 
 import com.coursework.gameobjects.GameObject;
 import com.coursework.main.GameEngine;
+import com.coursework.util.TexturePool;
 import com.coursework.util.Vector2d;
 
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +18,6 @@ public class Canvas extends JPanel{
     public final static int FIELD_SIZE = 640;
 
     private GameEngine gameEngine;
-    private BufferedImage background;
 
     public Canvas(GameEngine engine) {
         gameEngine = engine;
@@ -30,7 +29,7 @@ public class Canvas extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, 0, 0, null);
+        g.drawImage(TexturePool.getCanvasBackgroundTexture(), 0, 0, null);
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

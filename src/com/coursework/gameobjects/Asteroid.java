@@ -2,6 +2,7 @@ package com.coursework.gameobjects;
 
 import com.coursework.frames.Canvas;
 import com.coursework.main.GameEngine;
+import com.coursework.util.TexturePool;
 import com.coursework.util.Vector2d;
 
 import java.awt.*;
@@ -50,8 +51,9 @@ public class Asteroid extends GameObject{
         Shape shape = getShape();
 
         g.setColor(Color.WHITE);
-        g.setStroke(new BasicStroke(2f));
-        g.draw(shape);
+        g.setClip(shape);
+        g.drawImage(TexturePool.getAsteroidMagmaTexture(), -(int)radius, -(int)radius, null);
+        g.setClip(null);
     }
 
     private static Vector2d calculatePosition(Random random) {
