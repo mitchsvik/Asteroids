@@ -4,13 +4,9 @@ import com.coursework.frames.Canvas;
 import com.coursework.main.GameEngine;
 import com.coursework.util.Vector2d;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,9 +15,6 @@ import java.util.List;
  * Created by Veniamin Zinevych on 28.04.2016.
  */
 public class Shuttle extends GameObject {
-    private BufferedImage material;
-    private BufferedImage flame;
-
     private boolean pushPressed;
     private boolean rotateLeftPressed;
     private boolean rotateRightPressed;
@@ -34,17 +27,6 @@ public class Shuttle extends GameObject {
 
     public Shuttle() {
         super(new Vector2d(Canvas.FIELD_SIZE/2.0, Canvas.FIELD_SIZE/2.0), new Vector2d(0.0, 0.0), 10.0, 0);
-
-        try {
-            material = ImageIO.read(new File("resources\\images\\backgrounds\\shuttleMain.png"));
-        } catch (IOException e) {
-            material = new BufferedImage((int)radius*2, (int)radius*2, 1);
-        }
-        try {
-            flame = ImageIO.read(new File("resources\\images\\backgrounds\\shuttleFlame.png"));
-        } catch (IOException e) {
-            flame = new BufferedImage((int)radius*2, (int)radius*2, 1);
-        }
 
         bullets = new LinkedList<Bullet>();
         rotation = -Math.PI / 2;
@@ -140,25 +122,23 @@ public class Shuttle extends GameObject {
     @Override
     public void draw(Graphics2D g, GameEngine gameEngine) {
         Shape shape = getShape();
-        Rectangle r = shape.getBounds();
 
         g.setClip(shape);
-        g.drawImage(material, -(int)radius, -(int)radius, null);
         g.setClip(null);
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         g.setStroke(new BasicStroke(1f));
         g.draw(shape);
     }
 
     private Shape getShape() {
         GeneralPath p = new GeneralPath();
-        p.moveTo(10,0);
-        p.lineTo(-10,-8);
-        p.lineTo(-10,-7);
+        p.moveTo(10, 0);
+        p.lineTo(-5,-9);
+        p.lineTo(-8,-6);
         p.lineTo(-6,-5);
-        p.lineTo(-6,5);
-        p.lineTo(-10,7);
-        p.lineTo(-10,8);
+        p.lineTo(-6, 5);
+        p.lineTo(-8, 6);
+        p.lineTo(-5, 9);
         p.closePath();
         return p;
     }

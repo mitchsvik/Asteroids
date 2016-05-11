@@ -52,9 +52,10 @@ public class Vector2d {
         return this;
     }
 
-    public void add(Vector2d vector) {
+    public Vector2d add(Vector2d vector) {
         x += vector.getX();
         y += vector.getY();
+        return this;
     }
 
     public double getLength() {

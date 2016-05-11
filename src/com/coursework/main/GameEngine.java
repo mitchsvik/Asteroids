@@ -1,6 +1,7 @@
 package com.coursework.main;
 
 import com.coursework.frames.Canvas;
+import com.coursework.gameobjects.Asteroid;
 import com.coursework.gameobjects.GameObject;
 import com.coursework.gameobjects.Shuttle;
 
@@ -110,6 +111,10 @@ public class GameEngine extends JFrame {
         return lives;
     }
 
+    public Random getRandom() {
+        return random;
+    }
+
     public void startGame() {
         gameObjectList = new LinkedList<GameObject>();
         waitingList = new ArrayList<GameObject>();
@@ -119,6 +124,9 @@ public class GameEngine extends JFrame {
         lives = 3;
 
         gameObjectList.add(shuttle);
+        gameObjectList.add(new Asteroid(random));
+        gameObjectList.add(new Asteroid(random));
+        gameObjectList.add(new Asteroid(random));
 
         timer = new Timer(17, ActionEvent -> {
             updateGame();

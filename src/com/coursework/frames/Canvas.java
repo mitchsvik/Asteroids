@@ -4,11 +4,8 @@ import com.coursework.gameobjects.GameObject;
 import com.coursework.main.GameEngine;
 import com.coursework.util.Vector2d;
 
-import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,12 +23,7 @@ public class Canvas extends JPanel{
     public Canvas(GameEngine engine) {
         gameEngine = engine;
 
-        try {
-            background = ImageIO.read(new File("resources\\images\\backgrounds\\canvas.jpg"));
-        } catch (IOException e) {
-            background = new BufferedImage(FIELD_SIZE, FIELD_SIZE, 1);
-        }
-
+        setBackground(Color.BLACK);
         setPreferredSize(new Dimension(FIELD_SIZE, FIELD_SIZE));
     }
 

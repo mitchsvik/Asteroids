@@ -5,7 +5,6 @@ import com.coursework.main.GameEngine;
 import com.coursework.util.Vector2d;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * Created by Veniamin Zinevych on 28.04.2016.
