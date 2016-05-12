@@ -23,6 +23,7 @@ public class Shuttle extends GameObject {
     private int consecutiveShots;
     private int fireCooldown;
     private int overheatCooldown;
+    private int frameCounter;
     private List<Bullet> bullets;
 
     public Shuttle() {
@@ -37,6 +38,7 @@ public class Shuttle extends GameObject {
         firingEnabled = true;
         fireCooldown = 0;
         overheatCooldown = 0;
+        frameCounter = 0;
     }
 
     public void setPush(boolean bool) {
@@ -65,11 +67,14 @@ public class Shuttle extends GameObject {
         velocity.set(0.0, 0.0);
         bullets.clear();
         consecutiveShots = 0;
+        frameCounter = 0;
     }
 
     @Override
     public void update(GameEngine gameEngine) {
         super.update(gameEngine);
+
+        frameCounter++;
 
         if (rotateLeftPressed != rotateRightPressed) {
             rotate(rotateLeftPressed ? -0.0523 : 0.0523);
@@ -98,7 +103,7 @@ public class Shuttle extends GameObject {
         overheatCooldown--;
         if (firingEnabled && firePressed && fireCooldown <= 0 && overheatCooldown <= 0) {
             if (bullets.size() < 8) {
-                fireCooldown = 6;
+                fireCooldown = 5;
                 Bullet bullet = new Bullet(this, rotation);
                 bullets.add(bullet);
                 gameEngine.addGameObject(bullet);
@@ -109,7 +114,7 @@ public class Shuttle extends GameObject {
                 consecutiveShots = 0;
                 overheatCooldown = 30;
             }
-        } else if (consecutiveShots > 0) {
+        } else if (consecutiveShots > 0 && !firePressed) {
             consecutiveShots--;
         }
     }
@@ -123,6 +128,10 @@ public class Shuttle extends GameObject {
 
     @Override
     public void draw(Graphics2D g, GameEngine gameEngine) {
+        if (gameEngine.isShuttleInvulnerable() && frameCounter % 20 > 10 || gameEngine.isGameOver()) {
+            return;
+        }
+
         Shape shape = getShape();
 
         g.setClip(shape);
@@ -132,11 +141,10 @@ public class Shuttle extends GameObject {
         g.setStroke(new BasicStroke(1f));
         g.draw(shape);
 
-        if (pushPressed) {
-            shape = getFlameShape();
-
-            g.setClip(shape);
+        if (pushPressed && !gameEngine.isPaused()) {
+            g.setClip(getFlameShape());
             g.drawImage(TexturePool.getFlameTexture(), -11, -5, null);
+            g.setClip(null);
         }
     }
 

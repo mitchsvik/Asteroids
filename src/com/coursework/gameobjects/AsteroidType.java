@@ -8,14 +8,14 @@ import java.awt.geom.GeneralPath;
  */
 public enum  AsteroidType {
     Small(15.0, 100),
-    Medium(25.0, 100),
-    Large(40.0, 100);
+    Medium(25.0, 50),
+    Large(40.0, 25);
 
     private final Shape shape;
     private final double radius;
     private final int score;
 
-    private AsteroidType(double radius, int score) {
+    AsteroidType(double radius, int score) {
         shape = getShape(radius);
         this.radius = radius;
         this.score = score;

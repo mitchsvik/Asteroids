@@ -26,7 +26,7 @@ public class Asteroid extends GameObject{
         rotation = -0.01 + random.nextDouble()*0.02;
         this.type = type;
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 15; i++) {
             update(null);
         }
     }
@@ -47,6 +47,7 @@ public class Asteroid extends GameObject{
                 }
             }
             notAlive();
+            gameEngine.addScore(type.getScore());
         }
     }
 
