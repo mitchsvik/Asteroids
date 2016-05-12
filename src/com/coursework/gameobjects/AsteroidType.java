@@ -23,12 +23,11 @@ public enum  AsteroidType {
 
     public Shape getShape(double radius) {
         double x, y;
-        int size = (int)(radius / 10);
-        double angleDelta = Math.PI*2 / (size*5);
+        double angleDelta = Math.PI*2 / 18;
 
         GeneralPath p = new GeneralPath();
         p.moveTo(radius, 0);
-        for(int i = 1; i < size*5; i++) {
+        for(int i = 1; i < 18; i++) {
             x = Math.cos(angleDelta*i)*radius;
             y = Math.sin(angleDelta*i)*radius;
             p.lineTo(x,y);

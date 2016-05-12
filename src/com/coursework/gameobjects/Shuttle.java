@@ -98,7 +98,7 @@ public class Shuttle extends GameObject {
         overheatCooldown--;
         if (firingEnabled && firePressed && fireCooldown <= 0 && overheatCooldown <= 0) {
             if (bullets.size() < 8) {
-                fireCooldown = 4;
+                fireCooldown = 6;
                 Bullet bullet = new Bullet(this, rotation);
                 bullets.add(bullet);
                 gameEngine.addGameObject(bullet);

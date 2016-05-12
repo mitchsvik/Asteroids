@@ -22,7 +22,7 @@ public class Canvas extends JPanel{
         gameEngine = engine;
 
         setBackground(Color.BLACK);
-        setPreferredSize(new Dimension(FIELD_SIZE-10, FIELD_SIZE-10));
+        setPreferredSize(new Dimension(FIELD_SIZE, FIELD_SIZE));
     }
 
     @Override

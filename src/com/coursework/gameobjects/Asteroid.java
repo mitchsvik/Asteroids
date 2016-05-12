@@ -22,7 +22,7 @@ public class Asteroid extends GameObject{
     }
 
     public Asteroid(Asteroid parent, AsteroidType type, Random random) {
-        super(parent.getPosition(), calculateVelocity(random), type.getRadius(), type.getScore());
+        super(new Vector2d(parent.getPosition()), calculateVelocity(random), type.getRadius(), type.getScore());
         rotation = -0.01 + random.nextDouble()*0.02;
         this.type = type;
 
@@ -39,13 +39,14 @@ public class Asteroid extends GameObject{
 
     @Override
     public void handleCollision(GameObject gameObject, GameEngine gameEngine) {
-        if (gameObject.getClass() != Asteroid.class) {
+        if (gameObject.getClass() == Bullet.class) {
             if (type != AsteroidType.Small) {
                 AsteroidType spawnType = AsteroidType.values()[type.ordinal() - 1];
                 for(int i = 0; i<2; i++) {
                     gameEngine.addGameObject(new Asteroid(this, spawnType, gameEngine.getRandom()));
                 }
             }
+            notAlive();
         }
     }
 

@@ -8,8 +8,10 @@ import com.coursework.util.TexturePool;
 
 import javax.swing.*;
 import javax.swing.Timer;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by Veniamin Zinevych on 03.05.2016.
@@ -31,7 +33,7 @@ public class GameEngine extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        add(canvas = new Canvas(this));
+        add(canvas = new Canvas(this), BorderLayout.CENTER);
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -100,7 +102,9 @@ public class GameEngine extends JFrame {
             }
         });
 
-        pack();
+        setMinimumSize(new Dimension(Canvas.FIELD_SIZE+6, Canvas.FIELD_SIZE+29));
+        setMaximumSize(getMinimumSize());
+        setPreferredSize(getMinimumSize());
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -123,9 +127,8 @@ public class GameEngine extends JFrame {
         shuttle = new Shuttle();
         random = new Random();
 
-        lives = 3;
+        resetGame();
 
-        gameObjectList.add(shuttle);
         gameObjectList.add(new Asteroid(random));
         gameObjectList.add(new Asteroid(random));
         gameObjectList.add(new Asteroid(random));
@@ -144,6 +147,17 @@ public class GameEngine extends JFrame {
 
         for (GameObject gameObject: gameObjectList) {
             gameObject.update(this);
+        }
+
+        for (int i = 0; i < gameObjectList.size() - 1; i++) {
+            GameObject a = gameObjectList.get(i);
+            for (int j = i + 1; j < gameObjectList.size(); j++) {
+                GameObject b = gameObjectList.get(j);
+                if (a.checkCollision(b)) {
+                    a.handleCollision(b, this);
+                    b.handleCollision(a, this);
+                }
+            }
         }
 
         Iterator<GameObject> iterator = gameObjectList.iterator();
