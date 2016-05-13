@@ -61,9 +61,9 @@ public class Canvas extends JPanel{
                 g2d.drawLine(-9, 5, -6, 8);
                 g2d.drawLine(-6, 8, 6, 8);
                 g2d.translate(30, 0);
-
             }
         }
+        g2d.setTransform(transform);
 
         Font font = new Font("Dialog", Font.PLAIN, 25);
         g2d.setFont(font);
@@ -73,12 +73,12 @@ public class Canvas extends JPanel{
         } else if (gameEngine.isPaused()) {
             drawTextCentered("Pause", g2d, 0);
         } else if (gameEngine.isLevelStarted()) {
-            drawTextCentered("Level " + gameEngine.getLevel(), g2d, 0);
+            drawTextCentered("Level " + gameEngine.getLevel(), g2d, -20);
         }
     }
 
     private void drawTextCentered(String text, Graphics g2d, int y) {
-        g2d.drawString(text, FIELD_SIZE/2 - g2d.getFontMetrics().stringWidth(text) / 2,
+        g2d.drawString(text, FIELD_SIZE / 2 - g2d.getFontMetrics().stringWidth(text) / 2,
                 FIELD_SIZE / 2 + y);
     }
 

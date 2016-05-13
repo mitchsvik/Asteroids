@@ -222,7 +222,18 @@ public class GameEngine extends JFrame {
             shuttle.setFiringEnabled(true);
 
             for(int i = 0; i< 2 + level; i++) {
-                addGameObject(new Asteroid(random));
+                int type = random.nextInt(3);
+                switch (type) {
+                    case 0:
+                        addGameObject(new Asteroid(random));
+                        break;
+                    case 1:
+                        addGameObject(new AsteroidMagma(random));
+                        break;
+                    case 2:
+                        addGameObject(new AsteroidIce(random));
+                        break;
+                }
             }
         }
 
@@ -276,6 +287,9 @@ public class GameEngine extends JFrame {
             gameOver = true;
             restartCooldown = 120;
             deathCooldown = 0;
+            if (engine.isHighScore(score)) {
+                engine.writeHighScore("Player-" + score);
+            }
         } else {
             deathCooldown = 180;
         }
@@ -292,7 +306,7 @@ public class GameEngine extends JFrame {
 
     public boolean areEnemyDead() {
         for (GameObject gameObject: gameObjectList) {
-            if(gameObject.getClass() == Asteroid.class || gameObject.getClass() == UFO.class
+            if((gameObject instanceof Asteroid) || gameObject.getClass() == UFO.class
                     || gameObject.getClass() == LargeUFO.class) {
                 return false;
             }

@@ -6,13 +6,14 @@ import com.coursework.util.TexturePool;
 import com.coursework.util.Vector2d;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
  * Created by Veniamin Zinevych on 28.04.2016.
  */
 public class Asteroid extends GameObject{
-    private AsteroidType type;
+    protected AsteroidType type;
     private double rotation;
 
     public Asteroid(Random random) {
@@ -55,10 +56,14 @@ public class Asteroid extends GameObject{
     public void draw(Graphics2D g, GameEngine gameEngine) {
         Shape shape = type.getShape(radius);
 
-        g.setColor(Color.WHITE);
+        //g.setColor(Color.WHITE);
         g.setClip(shape);
-        g.drawImage(TexturePool.getAsteroidRockTexture(), -(int)radius, -(int)radius, null);
+        g.drawImage(getTexture(), -(int)radius, -(int)radius, null);
         g.setClip(null);
+    }
+
+    protected BufferedImage getTexture() {
+        return TexturePool.getAsteroidRockTexture();
     }
 
     private static Vector2d calculatePosition(Random random) {

@@ -3,6 +3,8 @@ package com.coursework.frames;
 import com.coursework.main.Engine;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 
 public class MainMenu extends JFrame {
@@ -10,6 +12,13 @@ public class MainMenu extends JFrame {
 
     public MainMenu(Engine e) {
         engine = e;
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                engine.stop();
+            }
+        });
 
         setSize(360, 480);
         setResizable(false);
@@ -19,7 +28,7 @@ public class MainMenu extends JFrame {
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
 
-        Font font = new Font("Gost Type B", 0, 48);
+        Font font = new Font("Open Sans", 0, 48);
 
         JButton start = new JButton("Start");
         start.setPreferredSize(new Dimension(300, 105));
@@ -29,7 +38,7 @@ public class MainMenu extends JFrame {
         });
         p.add(start);
 
-        JButton stats = new JButton("Stats");
+        JButton stats = new JButton("High scores");
         stats.setPreferredSize(new Dimension(300, 105));
         stats.setFont(font);
         stats.addActionListener(Action -> {
@@ -43,7 +52,7 @@ public class MainMenu extends JFrame {
         settings.addActionListener(Action -> {
             e.showSettings();
         });
-        p.add(settings);
+        //p.add(settings);
 
         JButton exit = new JButton("Exit");
         exit.setPreferredSize(new Dimension(300, 105));
@@ -55,6 +64,7 @@ public class MainMenu extends JFrame {
 
         add(p);
 
+        setTitle("Main menu");
         setVisible(true);
     }
 }
