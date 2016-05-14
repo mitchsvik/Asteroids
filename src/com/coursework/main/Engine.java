@@ -15,7 +15,6 @@ import java.util.List;
 public class Engine {
     private MainMenu menu;
     private GameEngine gameEngine;
-    private SettingsMenu settingsMenu;
     private StatsMenu statsMenu;
     private List<Record> highScores;
 
@@ -26,15 +25,11 @@ public class Engine {
 
     public void startGame() {
         menu.setVisible(false);
-        if (settingsMenu != null) {
-            settingsMenu.setVisible(false);
-        }
         if (statsMenu != null) {
             statsMenu.setVisible(false);
         }
-        if (gameEngine == null) {
-            gameEngine = new GameEngine(this);
-        }
+
+        gameEngine = new GameEngine(this);
         gameEngine.startGame();
     }
 
@@ -44,12 +39,6 @@ public class Engine {
 
     public void showMainMenu() {
         menu.setVisible(true);
-    }
-
-    public void showSettings() {
-        if (settingsMenu == null)
-            settingsMenu = new SettingsMenu();
-        settingsMenu.setVisible(true);
     }
 
     public void showStats() {
@@ -78,13 +67,13 @@ public class Engine {
         }
 
         if (output == null || output.size() < 10) {
-            output = generateDefault();
+            output = generateDefaultHighScores();
         }
 
         return output;
     }
 
-    private List<Record> generateDefault() {
+    private List<Record> generateDefaultHighScores() {
         List<Record> defaultList = new ArrayList<>();
 
         defaultList.add(new Record("General", 100000));
@@ -110,15 +99,16 @@ public class Engine {
         return false;
     }
 
-    public void writeHighScore(String string) {
+    public void writeHighScore(String name, int score) {
         Iterator<Record> iterator = highScores.iterator();
-        Record newRecord = new Record(string);
+        Record newRecord = new Record(name, score);
         int i = 0;
         while (iterator.hasNext()) {
             Record record = iterator.next();
             if (newRecord.score > record.score) {
                 highScores.add(i, newRecord);
                 highScores.remove(10);
+                updateHighScores();
                 break;
             }
             i++;
@@ -131,6 +121,10 @@ public class Engine {
             output.add(record.toString());
         }
         return output;
+    }
+
+    public void updateHighScores() {
+        statsMenu = new StatsMenu(this);
     }
 
     private void saveHighScore() {

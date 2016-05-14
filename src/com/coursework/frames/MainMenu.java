@@ -46,14 +46,6 @@ public class MainMenu extends JFrame {
         });
         p.add(stats);
 
-        JButton settings = new JButton("Settings");
-        settings.setPreferredSize(new Dimension(300, 105));
-        settings.setFont(font);
-        settings.addActionListener(Action -> {
-            e.showSettings();
-        });
-        //p.add(settings);
-
         JButton exit = new JButton("Exit");
         exit.setPreferredSize(new Dimension(300, 105));
         exit.setFont(font);

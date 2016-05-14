@@ -288,7 +288,7 @@ public class GameEngine extends JFrame {
             restartCooldown = 120;
             deathCooldown = 0;
             if (engine.isHighScore(score)) {
-                engine.writeHighScore("Player-" + score);
+                engine.writeHighScore("Player", score);
             }
         } else {
             deathCooldown = 180;
@@ -306,8 +306,7 @@ public class GameEngine extends JFrame {
 
     public boolean areEnemyDead() {
         for (GameObject gameObject: gameObjectList) {
-            if((gameObject instanceof Asteroid) || gameObject.getClass() == UFO.class
-                    || gameObject.getClass() == LargeUFO.class) {
+            if((gameObject instanceof Asteroid)) {
                 return false;
             }
         }
